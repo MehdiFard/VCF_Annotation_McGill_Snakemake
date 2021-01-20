@@ -1,7 +1,7 @@
-# Answer to skills_test_1-main
+# Answer to skills_test
 A snakemake pipeline for annotation and filtering VCF files.
 
-## List of all used software tools:
+## List of used software tools:
 * python =3.8.5
 * R =4.0.3
 * java =11.0.9.1
