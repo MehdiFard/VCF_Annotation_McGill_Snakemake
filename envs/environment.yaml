@@ -1,0 +1,18 @@
+channels:
+  - bioconda
+  - anaconda
+  - conda-forge
+dependencies:
+  - picard =2.23.3
+  - vcftools =0.1.16
+  - bcftools =1.10.2
+  - plink2
+  - tabix 
+  - bioconductor-VariantAnnotation =1.36.0
+  - moreutils
+  
+  
+ # - snakemake =5.10.0 
+ # - plink2 =2.00a2.3LM
+ # - tabix =1.10.2-3
+ # - moreutils =0.63-1 
