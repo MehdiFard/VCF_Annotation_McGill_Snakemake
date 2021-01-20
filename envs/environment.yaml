@@ -11,8 +11,3 @@ dependencies:
   - bioconductor-VariantAnnotation =1.36.0
   - moreutils
   
-  
- # - snakemake =5.10.0 
- # - plink2 =2.00a2.3LM
- # - tabix =1.10.2-3
- # - moreutils =0.63-1 
