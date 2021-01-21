@@ -34,8 +34,6 @@ rule parsing_metadata:
         "log/parsing.log"
     shell:
         """
-        # cut -d"," -f1 {input.info} | sed '1d' > {output.vcflist} 2> {log} # VCF names
-        # sed -i -e 's#^#{VCF_DIR}/#' {output.vcflist} 2>> {log} # Adding VCF address to VCF names
         cut -d"," -f1 {input.info} | sed '1d' | ts {VCF_DIR}/ | tr -d ' ' > {output.vcflist} 2> {log} # VCF file names.
         cut -d"," -f1 --complement {input.info} | awk 'NR==1 || NR==2' > {output.thrs} 2>> {log}  # Thresholds
         """
