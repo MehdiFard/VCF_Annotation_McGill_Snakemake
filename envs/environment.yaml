@@ -1,13 +1,13 @@
 channels:
   - bioconda
-  - anaconda
   - conda-forge
 dependencies:
-  - picard =2.23.3
-  - vcftools =0.1.16
-  - bcftools =1.10.2
-  - plink2
-  - tabix 
-  - bioconductor-VariantAnnotation =1.36.0
-  - moreutils
-  
+  - bioconda::snakemake=5.10.0
+  - conda-forge::python=3.8.5
+  - bioconda::picard=2.23.3-0
+  - bioconda::vcftools=0.1.16
+  - bioconda::bcftools=1.10.2
+  - bioconda::plink2=2.00a2.3
+  - bioconda::tabix=0.2.6
+  - bioconda::bioconductor-VariantAnnotation=1.36.0
+  - bioconda::moreutils=0.5.7

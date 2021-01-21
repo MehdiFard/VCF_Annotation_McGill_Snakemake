@@ -41,7 +41,7 @@ rule parsing_metadata:
         """
 
 
-rule merge:
+rule mergevcfs:
     input:
         "intermediate/vcfnames.list",
     output:
@@ -70,7 +70,7 @@ rule qc:
         bash scr/thrs_to_variables.sh {input.thr} {input.mvcfs} {output.mvcfsqc} 2> {log}
         """
 
-rule unrelated:
+rule identify_related_inds:
     input:
         "intermediate/merged_qcok.vcf.gz"
     output:
@@ -84,14 +84,14 @@ rule unrelated:
         "log/unrelated.log"
     shell:
         """
-        ./plink2 --vcf {input} --king-cutoff 0.0442 --out intermediate/filter &> {log}
+        plink2 --vcf {input} --king-cutoff 0.0442 --out intermediate/filter &> {log}
         grep -v "IID" {output.out_in} > {output.out_list}
         echo "# Check remained individuals for kinship ..."
-        ./plink2 --vcf {input} --remove {output.out_out} --make-king-table --out intermediate/merged_qc_unrel_kin  &> {log} # Making pairwase kinship table with unrelated individuals
+        plink2 --vcf {input} --remove {output.out_out} --make-king-table --out intermediate/merged_qc_unrel_kin  &> {log} # Making pairwase kinship table with unrelated individuals
         Rscript scr/kinship_check.R
         """
 
-rule filtering:
+rule remove_related_inds:
     input:
         list="results/list_of_unrelated_individuals.txt",
         mvcfqc="intermediate/merged_qcok.vcf.gz"
