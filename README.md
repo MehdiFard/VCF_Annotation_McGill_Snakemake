@@ -56,3 +56,10 @@ Configure the workflow according to your needs via editing the file `config.yaml
 To exit the environment, execute
 
     $ conda deactivate
+### Expected output
+* A directory called `results` contains output VCFs and a list of unrelated individuals.
+* A directory called `intermediate` contains intermediate files.
+* A directory called `LOG` contains log files.
+### Workflow steps (DAG)
+![alt text](https://github.com/MehdiFard/Skill_test_McGill_Snakemake/blob/main/DAG.svg?raw=true)
+
