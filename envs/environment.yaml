@@ -2,7 +2,6 @@ channels:
   - bioconda
   - conda-forge
 dependencies:
-  - bioconda::snakemake=5.10.0
   - conda-forge::python=3.8.5
   - bioconda::picard=2.23.3-0
   - bioconda::vcftools=0.1.16
