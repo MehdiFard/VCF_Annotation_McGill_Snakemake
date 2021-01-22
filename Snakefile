@@ -22,6 +22,7 @@ rule all:
         expand("results/{file}.out.vcf.gz", file=FILES)
 
 
+
 rule parsing_metadata:
     input:
         info="data/info_files/metadata.csv"
@@ -39,7 +40,7 @@ rule parsing_metadata:
         """
 
 
-rule mergevcfs:
+rule merge_vcfs:
     input:
         "intermediate/vcfnames.list",
     output:
@@ -50,7 +51,7 @@ rule mergevcfs:
     log:
         "log/merge.log"
     shell:
-        "PicardCommandLine MergeVcfs I={input} O={output.mvcf} 2> {log}"
+        "picard MergeVcfs I={input} O={output.mvcf} 2> {log}"
 
 
 rule qc:
@@ -65,8 +66,9 @@ rule qc:
         "log/qc.log"
     shell:
         """
-        bash scr/thrs_to_variables.sh {input.thr} {input.mvcfs} {output.mvcfsqc} 2> {log}
+        bash src/thrs_to_variables.sh {input.thr} {input.mvcfs} {output.mvcfsqc} 2> {log}
         """
+
 
 rule identify_related_inds:
     input:
@@ -79,15 +81,16 @@ rule identify_related_inds:
     conda:
         "envs/environment.yaml"
     log:
-        "log/unrelated.log"
+        "log/identify_related_inds.log"
     shell:
         """
         plink2 --vcf {input} --king-cutoff 0.0442 --out intermediate/filter &> {log}
         grep -v "IID" {output.out_in} > {output.out_list}
         echo "# Check remained individuals for kinship ..."
-        plink2 --vcf {input} --remove {output.out_out} --make-king-table --out intermediate/merged_qc_unrel_kin  &> {log} # Making pairwase kinship table with unrelated individuals
-        Rscript scr/kinship_check.R
+        plink2 --vcf {input} --remove {output.out_out} --make-king-table --out intermediate/merged_qc_unrel_kin  &> {log}
+        Rscript src/kinship_check.R
         """
+
 
 rule remove_related_inds:
     input:
@@ -101,8 +104,9 @@ rule remove_related_inds:
         "log/filter.log"
     shell:
         """
-        bcftools view -S {input.list} {input.mvcfqc} | bgzip -c > {output.clean} 2> {log}  # Removing related individuals
+        bcftools view -S {input.list} {input.mvcfqc} | bcftools annotate -x INFO | bgzip -c > {output.clean} 2> {log}
         """
+
 
 rule annotation_Rscript:
     input:
@@ -115,7 +119,7 @@ rule annotation_Rscript:
         "log/annotation.log"
     shell:
         """
-        Rscript scr/info_field_cal_opt.R 2> {log}
+        Rscript src/info_field_cal_opt.R 2> {log}
         """
 
 
@@ -131,7 +135,7 @@ rule filter_AF:
         "log/filter_AF.log"
     shell:
         """
-        bcftools view -e "AF=0 | AF=1"  {input} | bgzip -c > {output.vcf} # Filtering sites with AF=1 and AF=0 (keeping sitis with 0<AF<1)
+        bcftools view -e "AF=0 | AF=1"  {input} | bgzip -c > {output.vcf}
         tabix -f -p vcf {output.vcf}
         """
 
