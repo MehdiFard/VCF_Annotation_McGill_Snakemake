@@ -66,7 +66,7 @@ rule qc:
         "log/qc.log"
     shell:
         """
-        bash src/thrs_to_variables.sh {input.thr} {input.mvcfs} {output.mvcfsqc} 2> {log}
+        bash src/qc_vcf.sh {input.thr} {input.mvcfs} {output.mvcfsqc} 2> {log}
         """
 
 
