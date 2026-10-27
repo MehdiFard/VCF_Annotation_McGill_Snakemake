@@ -1,7 +1,7 @@
 # VCF_Annotation
-A snakemake pipeline for annotation and filtering VCF files.
+A Snakemake pipeline for annotating and filtering VCF files.
 
-## List of used software tools:
+## List of software tools used:
 * python =3.8.5
 * R =4.0.3
 * java =11.0.9.1
@@ -39,7 +39,7 @@ Test your configuration by performing a dry-run via
 ### Method 2
 
 #### Step 1: Configure workflow
-Configure the workflow according to your needs via editing the file `config.yaml`.
+Configure the workflow according to your needs by editing the file `config.yaml`.
 
 #### Step 2: Creating an environment using environment.yaml
 
